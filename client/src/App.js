@@ -4,11 +4,13 @@ import "./App.css";
 
 import "./components/AppNavBar";
 import AppNavBar from "./components/AppNavBar";
+import ShoppingList from "./components/ShoppingList";
 
 function App() {
   return (
     <div className="App">
       <AppNavBar></AppNavBar>
+      <ShoppingList></ShoppingList>
     </div>
   );
 }
