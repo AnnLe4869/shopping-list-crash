@@ -1,31 +1,28 @@
 import React, { useState } from "react";
 import uuid from "uuid/v1";
-import { ListGroup, Button, Container, Fade } from "react-bootstrap";
+import { ListGroup, Button, Container } from "react-bootstrap";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 function Item({ item: { id, name }, handleRemove }) {
   const [open, setOpen] = useState(true);
 
   return (
     <>
-      <Fade
-        in={open}
-        onExited={() => {
-          setTimeout(() => handleRemove(id), 270);
-        }}
-      >
+      <CSSTransition in={open} timeout={300} classNames="fade">
         <ListGroup.Item>
           <Button
             variant="danger"
             className="mr-3"
             onClick={() => {
               setOpen(false);
+              handleRemove(id);
             }}
           >
             Remove
           </Button>
           {name}
         </ListGroup.Item>
-      </Fade>
+      </CSSTransition>
     </>
   );
 }
@@ -51,13 +48,24 @@ export default function ShoppingList() {
           Add new item
         </Button>
         <ListGroup>
-          {items.map(item => (
-            <Item
-              key={item.id}
-              item={item}
-              handleRemove={handleRemoveItem}
-            ></Item>
-          ))}
+          <TransitionGroup>
+            {items.map(({ id, name }) => (
+              <CSSTransition timeout={300} classNames="fade" key={id}>
+                <ListGroup.Item>
+                  <Button
+                    variant="danger"
+                    className="mr-3"
+                    onClick={() => {
+                      handleRemoveItem(id);
+                    }}
+                  >
+                    Remove
+                  </Button>
+                  {name}
+                </ListGroup.Item>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
         </ListGroup>
       </Container>
     </>
