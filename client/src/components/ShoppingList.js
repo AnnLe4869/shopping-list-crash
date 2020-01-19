@@ -2,44 +2,20 @@ import React, { useState } from "react";
 import uuid from "uuid/v1";
 import { ListGroup, Button, Container } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { useSelector, useDispatch } from "react-redux";
 
-function Item({ item: { id, name }, handleRemove }) {
-  const [open, setOpen] = useState(true);
-
-  return (
-    <>
-      <CSSTransition in={open} timeout={300} classNames="fade">
-        <ListGroup.Item>
-          <Button
-            variant="danger"
-            className="mr-3"
-            onClick={() => {
-              setOpen(false);
-              handleRemove(id);
-            }}
-          >
-            Remove
-          </Button>
-          {name}
-        </ListGroup.Item>
-      </CSSTransition>
-    </>
-  );
-}
+import { getItems, addItem, removeItem } from "../actions/actionCreator";
 
 export default function ShoppingList() {
-  const [items, setItems] = useState([
-    { id: uuid(), name: "Eggs" },
-    { id: uuid(), name: "Milk" },
-    { id: uuid(), name: "Steak" },
-    { id: uuid(), name: "Water" }
-  ]);
+  const dispatch = useDispatch();
+  const items = useSelector(state => state.items);
+
   const handleAddNewItem = () => {
     const name = prompt("Enter item");
-    setItems(prevItems => [...prevItems, { id: uuid(), name }]);
+    dispatch(addItem({ id: uuid(), name }));
   };
   const handleRemoveItem = id => {
-    setItems(prevItems => prevItems.filter(item => item.id !== id));
+    dispatch(removeItem(id));
   };
   return (
     <>
