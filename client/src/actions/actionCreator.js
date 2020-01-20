@@ -20,8 +20,9 @@ export const addItem = payload => {
 
 export const removeItem = payload => {
   return async dispatch => {
-    const { data: id } = await axios.delete(`/api/items/${payload}`);
-    console.log(id);
+    const {
+      data: { id }
+    } = await axios.delete(`/api/items/${payload}`);
     return dispatch({
       type: REMOVE_ITEM,
       payload: id

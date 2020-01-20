@@ -23,22 +23,25 @@ export default function ShoppingList() {
         <ItemModal></ItemModal>
         <ListGroup>
           <TransitionGroup>
-            {items.map(({ _id, name }) => (
-              <CSSTransition timeout={300} classNames="fade" key={_id}>
-                <ListGroup.Item>
-                  <Button
-                    variant="danger"
-                    className="mr-3"
-                    onClick={() => {
-                      handleRemoveItem(_id);
-                    }}
-                  >
-                    Remove
-                  </Button>
-                  {name}
-                </ListGroup.Item>
-              </CSSTransition>
-            ))}
+            {items.map(
+              ({ _id, name }) =>
+                console.log(_id, name) || (
+                  <CSSTransition timeout={300} classNames="fade" key={_id}>
+                    <ListGroup.Item>
+                      <Button
+                        variant="danger"
+                        className="mr-3"
+                        onClick={() => {
+                          handleRemoveItem(_id);
+                        }}
+                      >
+                        Remove
+                      </Button>
+                      {name}
+                    </ListGroup.Item>
+                  </CSSTransition>
+                )
+            )}
           </TransitionGroup>
         </ListGroup>
       </Container>
