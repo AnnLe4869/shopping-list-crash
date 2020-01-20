@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
 // @access public
 router.delete("/:id", async (req, res) => {
   try {
-    const item = await Item.findOneAndDelete(req.params.id);
+    const item = await Item.findByIdAndDelete(req.params.id);
     res.status(200).json({ success: true, id: item._id });
   } catch (err) {
     console.error(err);

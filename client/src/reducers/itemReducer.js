@@ -11,9 +11,6 @@ export default produce((draft = [], action) => {
       return draft;
     case REMOVE_ITEM:
       const index = draft.findIndex(item => {
-        // console.log(item._id);
-        // console.log(action.payload);
-        // console.log(item._id === action.payload);
         return item._id === action.payload;
       });
       if (index > -1) {
