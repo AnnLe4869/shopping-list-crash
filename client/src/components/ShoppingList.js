@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ListGroup, Button, Container } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,6 +9,10 @@ import ItemModal from "./ItemModal";
 export default function ShoppingList() {
   const dispatch = useDispatch();
   const items = useSelector(state => state.items);
+
+  useEffect(() => {
+    dispatch(getItems());
+  });
 
   const handleRemoveItem = id => {
     dispatch(removeItem(id));

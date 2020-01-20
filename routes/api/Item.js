@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const item = await Item.findOneAndDelete(req.params.id);
-    res.status(200).json({ success: true });
+    res.status(200).json({ success: true, id: item._id });
   } catch (err) {
     console.error(err);
     res.status(200).json({ success: false });

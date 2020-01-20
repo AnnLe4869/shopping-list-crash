@@ -16,7 +16,7 @@ export default function ItemModal() {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(addItem({ id: uuid(), name: item }));
+    dispatch(addItem({ name: item }));
     setOpen(false);
     setItem("");
   };
