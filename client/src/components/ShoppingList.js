@@ -1,28 +1,22 @@
-import React, { useEffect } from "react";
-import uuid from "uuid/v1";
+import React from "react";
 import { ListGroup, Button, Container } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getItems, addItem, removeItem } from "../actions/actionCreator";
+import { getItems, removeItem } from "../actions/actionCreator";
+import ItemModal from "./ItemModal";
 
 export default function ShoppingList() {
   const dispatch = useDispatch();
   const items = useSelector(state => state.items);
 
-  const handleAddNewItem = () => {
-    const name = prompt("Enter item");
-    dispatch(addItem({ id: uuid(), name }));
-  };
   const handleRemoveItem = id => {
     dispatch(removeItem(id));
   };
   return (
     <>
       <Container>
-        <Button variant="secondary" className="my-2" onClick={handleAddNewItem}>
-          Add new item
-        </Button>
+        <ItemModal></ItemModal>
         <ListGroup>
           <TransitionGroup>
             {items.map(({ id, name }) => (
