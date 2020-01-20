@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import uuid from "uuid/v1";
 import { useDispatch } from "react-redux";
-import { Button, Container, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 
 import { addItem } from "../actions/actionCreator";
 
@@ -22,13 +22,13 @@ export default function ItemModal() {
   };
   return (
     <>
-      <Button variant="secondary" className="my-2" onClick={handleToggle}>
+      <Button variant="secondary" className="my-3" onClick={handleToggle}>
         Add new item
       </Button>
 
       <Modal show={open} onHide={handleToggle}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Add new item</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
@@ -36,7 +36,7 @@ export default function ItemModal() {
               <Form.Label>Item name</Form.Label>
               <Form.Control type="text" value={item} onChange={handleChange} />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" block={true} type="submit">
               Submit
             </Button>
           </Form>
