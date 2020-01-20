@@ -12,7 +12,7 @@ export default function ShoppingList() {
 
   useEffect(() => {
     dispatch(getItems());
-  });
+  }, []);
 
   const handleRemoveItem = id => {
     dispatch(removeItem(id));
@@ -23,14 +23,14 @@ export default function ShoppingList() {
         <ItemModal></ItemModal>
         <ListGroup>
           <TransitionGroup>
-            {items.map(({ id, name }) => (
-              <CSSTransition timeout={300} classNames="fade" key={id}>
+            {items.map(({ _id, name }) => (
+              <CSSTransition timeout={300} classNames="fade" key={_id}>
                 <ListGroup.Item>
                   <Button
                     variant="danger"
                     className="mr-3"
                     onClick={() => {
-                      handleRemoveItem(id);
+                      handleRemoveItem(_id);
                     }}
                   >
                     Remove

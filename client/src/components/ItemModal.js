@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import uuid from "uuid/v1";
 import { useDispatch } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
 
