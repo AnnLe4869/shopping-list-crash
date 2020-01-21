@@ -12,12 +12,14 @@ app.use(express.json());
   try {
     mongoose.connect(process.env.DATABASE_URL, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      useCreateIndex: true
     });
     mongoose.connection.on("error", err => console.error(err));
 
     // Use route
-    app.use("/api/items", require("./routes/api/Item"));
+    app.use("/api/items", require("./routes/api/item"));
+    app.use("/api/users", require("./routes/api/user"));
 
     // Serve static assets if in production
     if (process.env.NODE_ENV === "production") {
