@@ -12,6 +12,7 @@ export const getItems = () => {
 export const addItem = payload => {
   return async dispatch => {
     const { data } = await axios.post(`/api/items`, { name: payload.name });
+    dispatch(getItems());
     return dispatch({
       type: ADD_ITEM,
       payload: data
