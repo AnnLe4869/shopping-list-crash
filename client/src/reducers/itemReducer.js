@@ -4,7 +4,7 @@ import { produce } from "immer";
 export default produce((draft = [], action) => {
   switch (action.type) {
     case GET_ITEMS:
-      draft = action.payload;
+      draft.splice(0, draft.length, ...action.payload);
       return draft;
     case ADD_ITEM:
       draft.push(action.payload);

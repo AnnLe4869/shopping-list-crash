@@ -12,7 +12,6 @@ export default function ShoppingList() {
 
   useEffect(() => {
     dispatch(getItems());
-    console.log(Date.now());
   }, []);
 
   const handleRemoveItem = id => {
@@ -26,25 +25,22 @@ export default function ShoppingList() {
           <TransitionGroup>
             {[...items]
               .sort((a, b) => (a.date < b.date ? 1 : -1))
-              .map(
-                ({ _id, name }) =>
-                  console.log("hello world") || (
-                    <CSSTransition timeout={300} classNames="fade" key={_id}>
-                      <ListGroup.Item>
-                        <Button
-                          variant="danger"
-                          className="mr-3"
-                          onClick={() => {
-                            handleRemoveItem(_id);
-                          }}
-                        >
-                          Remove
-                        </Button>
-                        {name}
-                      </ListGroup.Item>
-                    </CSSTransition>
-                  )
-              )}
+              .map(({ _id, name }) => (
+                <CSSTransition timeout={300} classNames="fade" key={_id}>
+                  <ListGroup.Item>
+                    <Button
+                      variant="danger"
+                      className="mr-3"
+                      onClick={() => {
+                        handleRemoveItem(_id);
+                      }}
+                    >
+                      Remove
+                    </Button>
+                    {name}
+                  </ListGroup.Item>
+                </CSSTransition>
+              ))}
           </TransitionGroup>
         </ListGroup>
       </Container>
