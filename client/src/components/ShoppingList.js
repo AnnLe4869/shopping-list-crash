@@ -12,6 +12,7 @@ export default function ShoppingList() {
 
   useEffect(() => {
     dispatch(getItems());
+    console.log(Date.now());
   }, []);
 
   const handleRemoveItem = id => {

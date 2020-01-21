@@ -17,6 +17,7 @@ export default produce((draft = [], action) => {
         draft.splice(index, 1);
       }
       return draft;
+
     default:
       return draft;
   }
