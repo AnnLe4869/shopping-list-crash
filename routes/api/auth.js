@@ -6,23 +6,52 @@ require("dotenv").config();
 
 const User = require("../../models/User");
 
-// @route POST api/users
-// @desc REGISTER new user
+// @route POST api/auth
+// @desc AUTHENTICATE user
 // @access public
 router.post("/", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
     // Check for all fields is filled
-    if (!name || !email || !password) {
+    if (!email || !password) {
       return res
         .status(400)
         .json({ message: "Please enter all the required field" });
     }
     // Check for existed user
-    const existedUser = await User.findOne({ email });
-    if (!existedUser) {
-      return res.status(400).json({ message: "User not exited" });
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "Email or password is incorrect" });
     }
+
+    // Validate password
+    if (!(await bcrypt.compare(password, user.password))) {
+      return res
+        .status(400)
+        .json({ message: "Email or password is incorrect" });
+    }
+
+    const token = await jwt.signAsync(
+      {
+        id: user._id,
+        name: user.name,
+        email: user.email
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: 10 * 60
+      }
+    );
+    return res.status(200).json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email
+      },
+      token: token
+    });
   } catch (err) {
     console.error(err);
   }
