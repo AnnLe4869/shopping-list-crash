@@ -6,7 +6,6 @@ import authReducer from "./authReducer";
 
 export default combineReducers({
   items: itemReducer,
-  loading: loadingReducer,
   error: errorReducer,
   auth: authReducer
 });

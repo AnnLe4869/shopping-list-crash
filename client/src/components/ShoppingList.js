@@ -5,6 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { getItems, removeItem } from "../actions/actionCreator";
 import ItemModal from "./ItemModal";
+import Login from "./auth/LoginModal";
+import Register from "./auth/RegisterModal";
+import Logout from "./auth/LogoutModal";
 
 export default function ShoppingList() {
   const dispatch = useDispatch();
@@ -21,6 +24,9 @@ export default function ShoppingList() {
     <>
       <Container>
         <ItemModal></ItemModal>
+        <Register></Register>
+        <Login></Login>
+        <Logout></Logout>
         <ListGroup>
           <TransitionGroup>
             {[...items]

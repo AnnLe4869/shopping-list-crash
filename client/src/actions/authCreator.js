@@ -9,18 +9,8 @@ import {
   REGISTER_FAIL
 } from "./types";
 
-import { returnErrors } from "./errorActions";
-
-import {
-  USER_LOADED,
-  USER_LOADING,
-  AUTH_ERROR,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT_SUCCESS,
-  REGISTER_SUCCESS,
-  REGISTER_FAIL
-} from "./types";
+import { returnErrors } from "./errorCreator";
+import axios from "axios";
 
 // Check token & load user
 export const loadUser = () => (dispatch, getState) => {
