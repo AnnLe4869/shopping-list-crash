@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authMiddleware = require("../../middleware/auth");
+
 require("bluebird").promisifyAll(jwt);
 require("dotenv").config();
 
@@ -54,6 +56,21 @@ router.post("/", async (req, res) => {
     });
   } catch (err) {
     console.error(err);
+  }
+});
+
+// @route GET api/auth/user
+// @desc AUTHENTICATE user
+// @access private
+router.get("/user", authMiddleware, async (req, res) => {
+  try {
+    // Check for existed user
+    const user = await User.findById(req.user.id).select("-password");
+
+    return res.status(200).json({ user });
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: "Something went wrong" });
   }
 });
 

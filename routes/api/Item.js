@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Item = require("../../models/Item");
+const authMiddleware = require("../../middleware/auth");
 const router = require("express").Router();
 
 // @route GET api/items
@@ -16,8 +17,8 @@ router.get("/", async (req, res) => {
 
 // @route POST api/items
 // @desc POST all item
-// @access public
-router.post("/", async (req, res) => {
+// @access private
+router.post("/", authMiddleware, async (req, res) => {
   try {
     const item = await Item.create(req.body);
     res.status(200).json(item);
@@ -28,8 +29,8 @@ router.post("/", async (req, res) => {
 
 // @route DELETE api/items.:id
 // @desc DELETE a specific item
-// @access public
-router.delete("/:id", async (req, res) => {
+// @access private
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const item = await Item.findByIdAndDelete(req.params.id);
     res.status(200).json({ success: true, id: item._id });
