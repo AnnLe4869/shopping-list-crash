@@ -5,13 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { getItems, removeItem } from "../actions/actionCreator";
 import ItemModal from "./ItemModal";
-import Login from "./auth/LoginModal";
-import Register from "./auth/RegisterModal";
-import Logout from "./auth/LogoutModal";
 
 export default function ShoppingList() {
   const dispatch = useDispatch();
   const items = useSelector(state => state.items);
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   useEffect(() => {
     dispatch(getItems());
@@ -24,9 +22,6 @@ export default function ShoppingList() {
     <>
       <Container>
         <ItemModal></ItemModal>
-        <Register></Register>
-        <Login></Login>
-        <Logout></Logout>
         <ListGroup>
           <TransitionGroup>
             {[...items]
@@ -34,15 +29,18 @@ export default function ShoppingList() {
               .map(({ _id, name }) => (
                 <CSSTransition timeout={300} classNames="fade" key={_id}>
                   <ListGroup.Item>
-                    <Button
-                      variant="danger"
-                      className="mr-3"
-                      onClick={() => {
-                        handleRemoveItem(_id);
-                      }}
-                    >
-                      Remove
-                    </Button>
+                    {isAuthenticated ? (
+                      <Button
+                        variant="danger"
+                        className="mr-3"
+                        onClick={() => {
+                          handleRemoveItem(_id);
+                        }}
+                      >
+                        Remove
+                      </Button>
+                    ) : null}
+
                     {name}
                   </ListGroup.Item>
                 </CSSTransition>

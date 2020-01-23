@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
 
 import { addItem } from "../actions/actionCreator";
@@ -8,6 +8,7 @@ export default function ItemModal() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState("");
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   const handleToggle = () => setOpen(!open);
   const handleChange = e => {
@@ -21,9 +22,13 @@ export default function ItemModal() {
   };
   return (
     <>
-      <Button variant="secondary" className="my-3" onClick={handleToggle}>
-        Add new item
-      </Button>
+      {isAuthenticated ? (
+        <Button variant="secondary" className="my-3" onClick={handleToggle}>
+          Add new item
+        </Button>
+      ) : (
+        <h4 className="my-3">Please log in to continue</h4>
+      )}
 
       <Modal show={open} onHide={handleToggle}>
         <Modal.Header closeButton>

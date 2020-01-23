@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
 
 import { login } from "../../actions/authCreator";
@@ -10,6 +10,11 @@ export default function LoginModal() {
     password: ""
   });
   const [show, setShow] = useState(false);
+  const [message, setMessage] = useState(null);
+
+  const error = useSelector(state => state.error);
+  const isAuthenticated = useSelector(state => state.isAuthenticated);
+
   const dispatch = useDispatch();
 
   const handleToggle = () => setShow(!show);
