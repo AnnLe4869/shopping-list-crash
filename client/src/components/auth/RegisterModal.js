@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal, Form, Alert } from "react-bootstrap";
 
 import { register } from "../../actions/authCreator";
+import { clearErrors } from "../../actions/errorCreator";
 
 export default function LoginModal() {
   const [input, setInput] = useState({
@@ -30,7 +31,10 @@ export default function LoginModal() {
     }
   }, [error.message.message, error.id]);
 
-  const handleToggle = () => setShow(!show);
+  const handleToggle = () => {
+    dispatch(clearErrors());
+    setShow(!show);
+  };
   const handleChange = e => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
