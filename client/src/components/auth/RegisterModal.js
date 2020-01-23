@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
 
 import { register } from "../../actions/authCreator";
@@ -11,7 +11,24 @@ export default function LoginModal() {
     password: ""
   });
   const [show, setShow] = useState(false);
+  const [message, setMessage] = useState(null);
+
   const dispatch = useDispatch();
+  const error = useSelector(state => state.error);
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    if (error) {
+      if (error.id === "REGISTER_FAIL") {
+        setMessage(error.message.message);
+      } else {
+        setMessage(null);
+      }
+    }
+    if (isAuthenticated) {
+      setShow(false);
+    }
+  }, [error.message.message, error.id]);
 
   const handleToggle = () => setShow(!show);
   const handleChange = e => {
@@ -26,7 +43,6 @@ export default function LoginModal() {
         name: input.name
       })
     );
-    setShow(false);
     setInput({
       email: "",
       password: "",
@@ -53,8 +69,11 @@ export default function LoginModal() {
                 value={input.email}
                 onChange={handleChange}
               />
+              {message ? (
+                <Form.Text className="text-muted">{message}.</Form.Text>
+              ) : null}
             </Form.Group>
-            <Form.Group controlId="email">
+            <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
@@ -62,6 +81,9 @@ export default function LoginModal() {
                 value={input.name}
                 onChange={handleChange}
               />
+              {message ? (
+                <Form.Text className="text-muted">{message}.</Form.Text>
+              ) : null}
             </Form.Group>
             <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
@@ -71,6 +93,9 @@ export default function LoginModal() {
                 value={input.password}
                 onChange={handleChange}
               />
+              {message ? (
+                <Form.Text className="text-muted">{message}.</Form.Text>
+              ) : null}
             </Form.Group>
             <Button variant="primary" block={true} type="submit">
               Submit

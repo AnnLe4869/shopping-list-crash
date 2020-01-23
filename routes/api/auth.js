@@ -24,14 +24,14 @@ router.post("/", async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       return res
-        .status(400)
+        .status(401)
         .json({ message: "Email or password is incorrect" });
     }
 
     // Validate password
     if (!(await bcrypt.compare(password, user.password))) {
       return res
-        .status(400)
+        .status(401)
         .json({ message: "Email or password is incorrect" });
     }
 

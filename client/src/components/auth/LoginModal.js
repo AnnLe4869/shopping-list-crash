@@ -13,9 +13,21 @@ export default function LoginModal() {
   const [message, setMessage] = useState(null);
 
   const error = useSelector(state => state.error);
-  const isAuthenticated = useSelector(state => state.isAuthenticated);
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (error) {
+      if (error.id === "LOGIN_FAIL") {
+        setMessage(error.message.message);
+      } else {
+        setMessage(null);
+      }
+    }
+    if (isAuthenticated) {
+      setShow(false);
+    }
+  }, [error.id, error.message.message]);
 
   const handleToggle = () => setShow(!show);
   const handleChange = e => {
@@ -24,7 +36,7 @@ export default function LoginModal() {
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(login({ email: input.email, password: input.password }));
-    setShow(false);
+
     setInput({
       email: "",
       password: ""
@@ -42,7 +54,7 @@ export default function LoginModal() {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="item">
+            <Form.Group controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="text"
@@ -50,8 +62,11 @@ export default function LoginModal() {
                 value={input.email}
                 onChange={handleChange}
               />
+              {message ? (
+                <Form.Text className="text-muted">{message}.</Form.Text>
+              ) : null}
             </Form.Group>
-            <Form.Group controlId="item">
+            <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="text"
@@ -59,6 +74,9 @@ export default function LoginModal() {
                 value={input.password}
                 onChange={handleChange}
               />
+              {message ? (
+                <Form.Text className="text-muted">{message}.</Form.Text>
+              ) : null}
             </Form.Group>
             <Button variant="primary" block={true} type="submit">
               Submit
