@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, Alert } from "react-bootstrap";
 
 import { register } from "../../actions/authCreator";
 
@@ -59,6 +59,7 @@ export default function LoginModal() {
         <Modal.Header closeButton>
           <Modal.Title>Register</Modal.Title>
         </Modal.Header>
+        {message ? <Alert variant="danger">{message}.</Alert> : null}
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="email">
@@ -69,9 +70,6 @@ export default function LoginModal() {
                 value={input.email}
                 onChange={handleChange}
               />
-              {message ? (
-                <Form.Text className="text-muted">{message}.</Form.Text>
-              ) : null}
             </Form.Group>
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
@@ -81,9 +79,6 @@ export default function LoginModal() {
                 value={input.name}
                 onChange={handleChange}
               />
-              {message ? (
-                <Form.Text className="text-muted">{message}.</Form.Text>
-              ) : null}
             </Form.Group>
             <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
@@ -93,9 +88,6 @@ export default function LoginModal() {
                 value={input.password}
                 onChange={handleChange}
               />
-              {message ? (
-                <Form.Text className="text-muted">{message}.</Form.Text>
-              ) : null}
             </Form.Group>
             <Button variant="primary" block={true} type="submit">
               Submit
